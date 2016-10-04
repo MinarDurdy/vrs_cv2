@@ -27,6 +27,7 @@ SOFTWARE.
 */
 
 /* Includes */
+
 #include <stddef.h>
 #include "stm32l1xx.h"
 
@@ -48,12 +49,21 @@ SOFTWARE.
 */
 int main(void)
 {
+/*	GPIO_InitTypeDef gpioInitStr;
+	gpioInitStr.GPIO_Mode=GPIO_Mode_OUT;
+	gpioInitStr.GPIO_OType=GPIO_OType_PP;
+	gpioInitStr.GPIO_PuPd=GPIO_PuPd_UP;
+	gpioInitStr.GPIO_Speed=GPIO_Speed_40MHz;*/
+
   int i = 0;
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA,ENABLE);
 
   GPIOA->MODER |=((0b01)<<10);
   GPIOA->OTYPER &= ~((0b01)<<5);
   GPIOA->PUPDR |=((0b01)<<10);
   GPIOA->OSPEEDR |=((0b11)<<10);
+
+
   /**
   *  IMPORTANT NOTE!
   *  See the <system_*.c> file and how/if the SystemInit() function updates 
@@ -75,8 +85,15 @@ int main(void)
 
 
   /* Infinite loop */
-  while (1)
+   while (1)
   {
+	   if(i == 10000) {
+		   GPIOA->ODR |=((uint16_t)(0b1)<<5);
+	   }
+	   if(i == 30000) {
+		   GPIOA->ODR &= ~((uint16_t)(0b1)<<5);
+				   i=0;
+	   }
 	i++;
   }
   return 0;
