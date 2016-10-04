@@ -58,12 +58,11 @@ int main(void)
   int i = 0;
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA,ENABLE);
 
-  /*  GPIOA->MODER |=((0b01)<<10);
+  GPIOA->MODER |=((0b01)<<10);
   GPIOA->OTYPER &= ~((0b01)<<5);
   GPIOA->PUPDR |=((0b01)<<10);
   GPIOA->OSPEEDR |=((0b11)<<10);
-  GPIOA->ODR  ^=((uint16_t)(0b1)<<5);*/
-  GPIOA->MODER |=((0b01)<<10)
+  GPIOA->ODR  ^=((uint16_t)(0b1)<<5);
 
 
   /**
