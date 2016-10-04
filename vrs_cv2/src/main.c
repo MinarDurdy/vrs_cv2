@@ -87,11 +87,14 @@ int main(void)
   /* Infinite loop */
    while (1)
   {
+
 	   if(i == 10000) {
-		   GPIOA->ODR |=((uint16_t)(0b1)<<5);
+		   GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
+		//   GPIOA->ODR |=((uint16_t)(0b1)<<5);
 	   }
 	   if(i == 30000) {
-		   GPIOA->ODR &= ~((uint16_t)(0b1)<<5);
+		//   GPIOA->ODR &= ~((uint16_t)(0b1)<<5);
+		   GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
 				   i=0;
 	   }
 	i++;
