@@ -47,6 +47,7 @@ SOFTWARE.
 **
 **===========================================================================
 */
+
 int main(void)
 {
 /*	GPIO_InitTypeDef gpioInitStr;
@@ -54,9 +55,10 @@ int main(void)
 	gpioInitStr.GPIO_OType=GPIO_OType_PP;
 	gpioInitStr.GPIO_PuPd=GPIO_PuPd_UP;
 	gpioInitStr.GPIO_Speed=GPIO_Speed_40MHz;*/
-
+  uint8_t button = 0;
   int i = 0;
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA,ENABLE);
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC,ENABLE);
 
   GPIOA->MODER |=((0b01)<<10);
   GPIOA->OTYPER &= ~((0b01)<<5);
@@ -66,6 +68,10 @@ int main(void)
   GPIOC->MODER &= ~((0b11)<<26);
   GPIOC->OTYPER &= ~((0b01)<<13);
   GPIOC->PUPDR &= ~((0b11)<<26);
+
+
+
+
   ////////////////////////////////////////
   //rozblikanie led cez moder
   // GPIOA->MODER |=((0b01)<<10);
@@ -93,10 +99,19 @@ int main(void)
 
 
   /* Infinite loop */
- /*  while (1)
+   while (1)
   {
+	   if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
+	 //  if(GPIOC->IDR & GPIO_Pin_13 ==0){
+		    button=1;
+		    GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
+	   }
+	   else {
+		   button=0;
+		   GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
+	   }
 
-	   if(i == 10000) {
+	/*   if(i == 10000) {
 		   GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
 		//   GPIOA->ODR |=((uint16_t)(0b1)<<5);
 	   }
@@ -104,11 +119,12 @@ int main(void)
 		//   GPIOA->ODR &= ~((uint16_t)(0b1)<<5);
 		   GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
 				   i=0;
-	   }
+	   } */
 	i++;
+
   }
   return 0;
-}*/
+}
 
 #ifdef  USE_FULL_ASSERT
 
@@ -125,9 +141,9 @@ void assert_failed(uint8_t* file, uint32_t line)
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
 
   /* Infinite loop */
-  while (1)
+  /*while (1)
   {
-  }
+  }*/
 }
 #endif
 
@@ -136,8 +152,8 @@ void assert_failed(uint8_t* file, uint32_t line)
  * */
 void __assert_func(const char *file, int line, const char *func, const char *failedexpr)
 {
-  while(1)
-  {}
+ /* while(1)
+  {}*/
 }
 
 /*
