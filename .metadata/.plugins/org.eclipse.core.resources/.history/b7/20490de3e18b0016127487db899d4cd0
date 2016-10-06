@@ -63,9 +63,9 @@ int main(void)
   GPIOA->PUPDR |=((0b01)<<10);
   GPIOA->OSPEEDR |=((0b11)<<10);
  // GPIOA->ODR  ^=((uint16_t)(0b1)<<5);
-  GPIOC->MODER &= ~((0b11)<<26);
-  GPIOC->OTYPER &= ~((0b01)<<13);
-  GPIOC->PUPDR &= ~((0b11)<<26);
+  GPIOA->MODER &= ~((0b11)<<26);
+  GPIOA->OTYPER &= ~((0b01)<<13);
+  GPIOA->PUPDR &= ~((0b11)<<26);
   ////////////////////////////////////////
   //rozblikanie led cez moder
   // GPIOA->MODER |=((0b01)<<10);
