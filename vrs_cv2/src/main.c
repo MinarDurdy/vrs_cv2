@@ -23,6 +23,7 @@ int main(void)
   int i=0;
   int pomocna=0;
   int counter=0;
+  int counter2=0;
 
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA,ENABLE);
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC,ENABLE);
@@ -72,10 +73,35 @@ int main(void)
 	   }*/
 
 	  // sledovanie stavu tlacidla
-	  if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
+	  /*if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
 	  		    GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
 	  }
 	  else GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
+	  */
+
+	  //on off LED
+
+	if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
+		counter++;
+		if (counter>5){
+			pomocna=1;
+	  	  	counter=0;
+	  	}
+	}
+	if (pomocna==1){
+		if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))!=0){
+			counter2++;
+	  	    if (counter2>5){
+	  	    	GPIOA->ODR^=((uint16_t)(0b1)<<5);
+	  	  	 	pomocna=0;
+	  	  	 	counter2 = 0;
+	  	    }
+	  	}
+	}
+
+
+
+
 
 
 
