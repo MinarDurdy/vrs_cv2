@@ -55,7 +55,7 @@ int main(void)
   {
 
 	  // blikanie LED vo vybranom intervale
-	   /*if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
+	   if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
 		    GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
 		    Delay();
 		    GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
@@ -69,13 +69,8 @@ int main(void)
 		   Delay2();
 
 
-	   }*/
+	   }
 
-	  // sledovanie stavu tlacidla
-	  if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
-	  		    GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
-	  }
-	  else GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
 
 
 
