@@ -45,3 +45,23 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
+*.xmi
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.mylyn.monitor.ui.prefs
+*.prefs
+.metadata/.plugins/org.eclipse.core.resources/.history/5d/10b4866ac08800161a4fa83edc5b915c
+*.lock
+.metadata/.log
+*.0
+.metadata/.plugins/org.eclipse.core.resources/0.snap
+*.ini
+*.snap
+.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.index
+.metadata/.plugins/org.eclipse.core.resources/.history/32/60f314f2bb8800161a4fa83edc5b915c
+*.log
+.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
+*.pdom
+*.xml
+.metadata/.mylyn/repositories.xml.zip
+.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c
+*.index
