@@ -5,16 +5,7 @@
 
 int main(void)
 {
-	/*
-	GPIO_InitTypeDef GPIO_InitStructure;
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA,ENABLE);
-	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_OUT;
-	GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
-	GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_UP;
-	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_40MHz;
-	GPIO_InitStructure.GPIO_Pin =GPIO_Pin_5;
-	GPIO_Init(GPIOA, &GPIO_InitStructure);
-*/
+
 
 
 
@@ -24,19 +15,40 @@ int main(void)
   int pomocna=0;
   int counter=0;
   int counter2=0;
+  int BUTTON=0;
 
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA,ENABLE);
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC,ENABLE);
+
   GPIOA->MODER |=((0b01)<<10);
   GPIOA->OTYPER &= ~((0b01)<<5);
   GPIOA->PUPDR |=((0b01)<<10);
   GPIOA->OSPEEDR |=((0b11)<<10);
- // GPIOA->ODR  ^=((uint16_t)(0b1)<<5);
+  //GPIOA->ODR  ^=((uint16_t)(0b1)<<5);
 
 
   GPIOC->MODER &= ~((0b11)<<26);
   GPIOC->OTYPER &= ~((0b01)<<13);
   GPIOC->PUPDR &= ~((0b11)<<26);
+
+
+/*
+  	GPIO_InitTypeDef GPIO_InitStructure;
+  	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA,ENABLE);
+  	GPIO_InitStructure.GPIO_Mode=GPIO_Mode_OUT;
+  	GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
+  	GPIO_InitStructure.GPIO_PuPd=GPIO_PuPd_UP;
+  	GPIO_InitStructure.GPIO_Speed=GPIO_Speed_40MHz;
+  	GPIO_InitStructure.GPIO_Pin =GPIO_Pin_5;
+  	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+  	GPIO_InitTypeDef GPIOC_InitStructure;
+  	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOC,ENABLE);
+  	GPIOC_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  	GPIOC_InitStructure.GPIO_OType = GPIO_OType_PP;
+  	GPIOC_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+  	GPIO_Init(GPIOC,&GPIOC_InitStructure);
+  	*/
 
   void Delay(void){
       int i;
@@ -49,39 +61,85 @@ int main(void)
       for(i=0;i<100000;i++);
   }
 
-  //rozblikanie led cez moder
-  // GPIOA->MODER |=((0b01)<<10);
 
   while (1)
   {
+	  //------------------1 uloha------------------------//
+	  //zapnutie LED ODR
+	  //GPIOA->ODR |=((uint16_t)(0b1)<<5);
+	  //GPIO_SetBits(GPIOA, GPIO_Pin_5);
+	  //vypnutie LED ODR
+	  //GPIOA->ODR &= ~((uint16_t)(0b1)<<5);
+	  //GPIO_ResetBits(GPIOA, GPIO_Pin_5);
+	  //zapnutie LED BSRR
+	  //GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
+	  //vypnutie LED BSSR
+	  //GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
+	  //toglovanie LED
+	  //GPIOA->ODR^=((uint16_t)(0b1)<<5);
 
+	  //----------------2 uloha------------------------//
+	  //stav tlacidla pomocou premennej BUTTON
+	  if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
+		  BUTTON=1;
+	  }
+	  else BUTTON=0;
+
+	  //-----------------------------------------------//
+	  //stav tlacidla pomocou premennej BUTTON standartna kniznica
+	  /*if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13)==0){
+		  BUTTON=1;
+	  }
+	  else BUTTON=0;
+	  */
+
+	  //---------------3 uloha-------------------------//
 	  // blikanie LED vo vybranom intervale
-	   /*if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
+	  /*if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
 		    GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
 		    Delay();
 		    GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
 		    Delay();
 
 	  }
-	   else {
+	  else {
 		   GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
 		   Delay2();
 		   GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
 		   Delay2();
-
-
-	   }*/
-
+	  }*/
+	  //-------------------------------------------------------//
+	  // blikanie LED vo vybranom intervale standartna kniznica
+	  /*if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13)==0){
+		  GPIO_SetBits(GPIOA, GPIO_Pin_5);
+	  	  Delay();
+	  	  GPIO_ResetBits(GPIOA, GPIO_Pin_5);
+	  	  Delay();
+	  }
+	  else {
+		  GPIO_SetBits(GPIOA, GPIO_Pin_5);
+	  	  Delay2();
+	  	  GPIO_ResetBits(GPIOA, GPIO_Pin_5);
+	  	  Delay2();
+	  }*/
+	  //--------------------------------------------------------//
 	  // sledovanie stavu tlacidla
 	  /*if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
-	  		    GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
+	    	GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
 	  }
 	  else GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
 	  */
-
+	  //--------------------------------------------------------//
+	  // sledovanie stavu tlacidla standartna kniznica
+	  /*if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13)==0){
+		  GPIO_SetBits(GPIOA, GPIO_Pin_5);
+	  }
+	  else GPIO_ResetBits(GPIOA, GPIO_Pin_5);
+	  */
+	  //---------------------------------------------------------//
 	  //on off LED
 
-	if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
+	/*if( ((GPIOC->IDR)  & (uint16_t)(0b01<<13))==0){
 		counter++;
 		if (counter>5){
 			pomocna=1;
@@ -98,27 +156,29 @@ int main(void)
 	  	    }
 	  	}
 	}
+	*/
+	//------------------------------------------------------//
+	// on off LED standartna kniznica
 
-
-
-
-
-
-
-
-
-
-
-	/*   if(i == 10000) {
-		   GPIOA->BSRRL |=((uint16_t)(0b1)<<5);
-		//   GPIOA->ODR |=((uint16_t)(0b1)<<5);
-	   }
-	   if(i == 30000) {
-		//   GPIOA->ODR &= ~((uint16_t)(0b1)<<5);
-		   GPIOA->BSRRH |=((uint16_t)(0b1)<<5);
-				   i=0;
-	   } */
-	i++;
+	 /* if (GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13)==0){
+			counter++;
+			if (counter>5){
+				pomocna=1;
+		  	  	counter=0;
+		  	}
+		}
+		if (pomocna==1){
+			if(GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_13)!=0){
+				counter2++;
+		  	    if (counter2>5){
+		  	    	GPIOA->ODR^=((uint16_t)(0b1)<<5);
+		  	  	 	pomocna=0;
+		  	  	 	counter2 = 0;
+		  	    }
+		  	}
+		}
+*/
+		i++;
 
   }
   return 0;
